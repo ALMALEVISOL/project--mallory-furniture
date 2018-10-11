@@ -1,0 +1,19 @@
+import React, { Component } from "react";
+import image_header from "../../resources/landing-splash-bg.png";
+import "./Header.css";
+
+export default class Header extends Component {
+  render() {
+    return (
+      <div
+        className="hero"
+        style={{
+          backgroundImage: `url(${image_header})`
+        }}
+      >
+        <h1>Mallory's</h1>
+        <h2>Old furniture</h2>
+      </div>
+    );
+  }
+}
