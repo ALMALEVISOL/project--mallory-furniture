@@ -1,37 +1,112 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-
-import * as productsActions from "../../redux/reducers/products";
+import Loader from "react-loader-spinner";
+import { AllProductsContext } from "../../context/AllProducts";
 import MiniatureViewProduct from "../../components/MiniatureViewProduct/MiniatureViewProduct";
+import * as MFApi from "../../lib/API";
 
 class Products extends Component {
   state = {
-    products: []
+    isLoading: false,
+    error: null,
+    isCartDrawerOpen: false,
+    filteredProducts: []
   };
 
   componentDidMount() {
-    this.setState({
-      products: this.props.products
-    });
+    let category;
+    if (this.props.context.currentSelectedCategory === "") {
+      category = this.props.match.params.category;
+    } else {
+      category = this.props.context.currentSelectedCategory;
+    }
+    MFApi.getProductsWithFilter(category)
+      .then(function(res) {
+        return res.json();
+      })
+      .then(
+        function(data) {
+          if (data) {
+            this.setState({
+              filteredProducts: data,
+              isLoading: false,
+              error: null
+            });
+          } else {
+            this.setState({
+              filteredProducts: [],
+              isLoading: false,
+              error: "Lo sentimos, ocurrió un error"
+            });
+          }
+        }.bind(this)
+      )
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  componentWillUnmount() {
+    return true;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.context.currentSelectedCategory === "") return;
+    MFApi.getProductsWithFilter(nextProps.context.currentSelectedCategory)
+      .then(function(res) {
+        return res.json();
+      })
+      .then(
+        function(data) {
+          if (data) {
+            this.setState({
+              filteredProducts: data,
+              isLoading: false,
+              error: null
+            });
+          } else {
+            this.setState({
+              filteredProducts: [],
+              isLoading: false,
+              error: "Lo sentimos, ocurrió un error"
+            });
+          }
+        }.bind(this)
+      )
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
     return (
-      <div>
-        <h1>All products</h1>
-        {this.props.products.map(product => (
-          <MiniatureViewProduct product={product} />
-        ))}
-      </div>
+      <AllProductsContext.Consumer>
+        {context => (
+          <>
+            {this.state.error != null && (
+              <div class="alert alert-danger" role="alert">
+                {this.state.error}
+              </div>
+            )}
+            {this.state.isLoading && (
+              <Loader type="Triangle" color="red" height={100} width={100} />
+            )}
+            <h1>
+              {this.props.context.currentSelectedCategory === ""
+                ? this.props.match.params.category
+                : this.props.context.currentSelectedCategory}
+            </h1>
+            {this.state.filteredProducts.map(product => (
+              <MiniatureViewProduct product={product} />
+            ))}
+          </>
+        )}
+      </AllProductsContext.Consumer>
     );
   }
 }
 
-const mapPropsToState = state => {
-  return {
-    products: state.products
-  };
-};
-
-export default connect(mapPropsToState)(Products);
+export default props => (
+  <AllProductsContext.Consumer>
+    {context => <Products {...props} context={context} />}
+  </AllProductsContext.Consumer>
+);

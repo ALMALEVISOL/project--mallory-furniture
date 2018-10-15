@@ -2,6 +2,7 @@ import * as MFApi from "../../lib/API";
 
 // Action types
 const LOAD_PRODUCTS = "bookInventory/books/LOAD_BOOKS";
+const SET_CATEGORY = "SET_CATEGORY";
 
 export function loadProducts() {
   return dispatch => {
@@ -10,6 +11,15 @@ export function loadProducts() {
         type: LOAD_PRODUCTS,
         payload: products
       });
+    });
+  };
+}
+
+export function setCategory() {
+  return dispatch => {
+    dispatch({
+      type: SET_CATEGORY,
+      payload: "alma"
     });
   };
 }
