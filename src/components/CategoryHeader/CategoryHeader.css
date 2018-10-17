@@ -1,4 +1,4 @@
-.hero {
+.categoryHeader {
   /* background-image: url(/beach.jpeg); */
   background-size: cover;
   background-position: center;
@@ -10,9 +10,4 @@
   justify-content: center;
   align-items: center;
   height: 350px;
-}
-
-.header_mallory_title {
-  font-family: Playfair Display;
-  font-weight: 600;
 }

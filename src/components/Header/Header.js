@@ -11,7 +11,7 @@ export default class Header extends Component {
           backgroundImage: `url(${image_header})`
         }}
       >
-        <h1>Mallory Furniture </h1>
+        <h1 className={"header_mallory_title"}>Mallory Furniture </h1>
         <h6>Your furniture is old.</h6>
         <h6>Ours is older</h6>
       </div>

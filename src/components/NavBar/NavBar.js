@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
 import { AllProductsContext } from "../../context/AllProducts";
+import mf_logo_black from "../../resources/mf-logo-black.svg";
+import "./NavBar.css";
 
 export default class NavBar extends Component {
   render() {
@@ -10,9 +12,11 @@ export default class NavBar extends Component {
         {context => (
           <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
             <NavLink to="/">
-              <a className="navbar-brand" href="#">
-                Mallory Forniture
-              </a>
+              <img
+                className="card-img-top"
+                src={mf_logo_black}
+                alt="Card image cap"
+              />
             </NavLink>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -24,21 +28,21 @@ export default class NavBar extends Component {
                       }
                       className="nav-link "
                     >
-                      About <span className="sr-only">(current)</span>
+                      About
                     </a>
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link">Terms+Conditions</a>
+                  <NavLink to="/terms" activeClassName={"active"}>
+                    <a className="nav-link">Terms+Conditions</a>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link">|</a>
                 </li>
                 <li className="nav-item">
                   <NavLink to="/all" activeClassName={"active"}>
-                    <a className="nav-link">
-                      All <span className="sr-only">(current)</span>
-                    </a>
+                    <a className="nav-link">All</a>
                   </NavLink>
                 </li>
                 <li className="nav-item">
@@ -61,7 +65,7 @@ export default class NavBar extends Component {
                         context.setCurrentSelectedCategory("tables")
                       }
                     >
-                      Tables <span className="sr-only">(current)</span>
+                      Tables
                     </a>
                   </NavLink>
                 </li>
@@ -73,7 +77,7 @@ export default class NavBar extends Component {
                         context.setCurrentSelectedCategory("desks")
                       }
                     >
-                      Desks <span className="sr-only">(current)</span>
+                      Desks
                     </a>
                   </NavLink>
                 </li>
@@ -85,7 +89,7 @@ export default class NavBar extends Component {
                         context.setCurrentSelectedCategory("storage")
                       }
                     >
-                      Storage <span className="sr-only">(current)</span>
+                      Storage
                     </a>
                   </NavLink>
                 </li>
@@ -97,7 +101,7 @@ export default class NavBar extends Component {
                         context.setCurrentSelectedCategory("bedroom")
                       }
                     >
-                      Bedroom <span className="sr-only">(current)</span>
+                      Bedroom
                     </a>
                   </NavLink>
                 </li>
@@ -112,16 +116,17 @@ export default class NavBar extends Component {
                         context.setCurrentSelectedCategory("miscellaneous")
                       }
                     >
-                      Misc <span className="sr-only">(current)</span>
+                      Misc
                     </a>
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <NavLink to="/cart" activeClassName={"active"}>
-                    <a className="nav-link">
-                      CARRITO <span className="sr-only">(current)</span>
-                    </a>
-                  </NavLink>
+                <li className="nav-item nav-cart">
+                  <img
+                    className={"nav-cart-image"}
+                    alt="cart"
+                    src={"https://image.flaticon.com/icons/svg/626/626443.svg"}
+                    onClick={() => context.toggleShoppingCart()}
+                  />
                 </li>
               </ul>
             </div>
