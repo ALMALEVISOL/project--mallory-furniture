@@ -144,9 +144,13 @@ export default class AllProducts extends Component {
               On sale
             </button>
             <h1>{this.state.allProducts.length} items showing</h1>
-            {this.state.allProducts.map(product => (
-              <MiniatureViewProduct key={product.id} product={product} />
-            ))}
+            <div className="row">
+              {this.state.allProducts.map(product => (
+                <div className="col-3">
+                  <MiniatureViewProduct key={product.id} product={product} />
+                </div>
+              ))}
+            </div>
           </>
         )}
       </AllProductsContext.Consumer>
